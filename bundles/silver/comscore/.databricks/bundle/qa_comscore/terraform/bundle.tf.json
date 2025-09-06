@@ -1,0 +1,106 @@
+{
+  "terraform": {
+    "required_providers": {
+      "databricks": {
+        "source": "databricks/databricks",
+        "version": "1.65.1"
+      }
+    }
+  },
+  "provider": {
+    "databricks": {}
+  },
+  "resource": {
+    "databricks_pipeline": {
+      "comscore_silver_clean_transform": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "android_traffic_table": "comscore_android_traffic",
+          "bronze_schema": "bronze",
+          "browser_lookup_table": "comscore_bz_browser_lookup",
+          "catalog": "qa_comscore",
+          "desktop_combined_demographic_table": "comscore_bz_desktop_combined_demographic",
+          "desktop_day_session_table": "comscore_bz_desktop_day_session",
+          "desktop_os_lookup_table": "comscore_bz_desktop_os_lookup",
+          "desktop_search_click_table": "comscore_bz_desktop_search_click",
+          "desktop_search_fact_table": "comscore_bz_desktop_search_fact",
+          "desktop_traffic_table": "comscore_desktop_traffic",
+          "desktop_web_entity_table": "comscore_bz_desktop_web_entity",
+          "ios_traffic_table": "comscore_ios_traffic",
+          "mobile_day_session_table": "comscore_mobile_day_session",
+          "mobile_demographic_table": "comscore_mobile_demographic",
+          "platform_name": "Comscore",
+          "schema": "silver",
+          "schema_bronze": "bronze",
+          "time_lookup_table": "comscore_bz_time_lookup",
+          "traffic_category_table": "comscore_bz_traffic_category_lookup"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/silver_comscore/state/metadata.json"
+        },
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/silver_comscore/files/bundles/silver/comscore/comscore_silver_pipeline.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Silver Clean Transform",
+        "serverless": true,
+        "target": "silver"
+      },
+      "comscore_silver_desktop_traffic": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "catalog": "qa_comscore",
+          "desktop_combined_demographic_table": "comscore_bz_desktop_combined_demographic",
+          "desktop_os_lookup_table": "comscore_bz_desktop_os_lookup",
+          "desktop_traffic_table": "comscore_desktop_traffic",
+          "platform_name": "Comscore",
+          "schema": "silver",
+          "schema_bronze": "bronze",
+          "time_lookup_table": "comscore_bz_time_lookup"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/silver_comscore/state/metadata.json"
+        },
+        "development": false,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/silver_comscore/files/bundles/silver/comscore/comscore_silver_desktop_traffic_pl.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Silver Desktop Traffic",
+        "photon": true,
+        "serverless": true,
+        "target": "silver"
+      },
+      "silver_unit_tests": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "catalog": "qa_comscore",
+          "schema": "silver",
+          "test_table_name": "test_table"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/silver_comscore/state/metadata.json"
+        },
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/silver_comscore/files/bundles/silver/comscore/tests/test_pipeline.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Silver Unit Tests",
+        "serverless": true,
+        "target": "silver"
+      }
+    }
+  }
+}

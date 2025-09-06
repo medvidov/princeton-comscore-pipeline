@@ -1,0 +1,252 @@
+bundle:
+  name: bronze_comscore
+
+sync:
+  paths:
+    - "./"
+    - "../../../src/"
+
+variables:
+  # Variables without a default value must be set in the target configuration (e.g. dev, qa)
+  schema:
+    default: "bronze"
+  table_name:
+    default: "comscore_bz_mobile_traffic"
+  catalog:
+  desktop_day_session_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_day_session/comscore_desktop_day_session_244m.txt.gz_0_0_0.csv.gz"
+  desktop_search_click_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_click/US_comscore_click_rate_20200727.txt.gz"
+  desktop_search_fact_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_fact/US_comscore_search_fact_20191230.txt.gz"
+  desktop_web_entity_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_web_entity_map/US_comscore_search_web_entity_map_20191230.txt.gz"
+  traffic_category_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/traffic_category_map/comscore_category_map_201901.txt.gz"
+  desktop_os_lookup_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/desktop_OS_lookup/"
+  time_lookup_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/time_lookup/"
+  browser_type_lookup_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/browser_type/"
+  desktop_demographic_data_path:
+    default: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_demographics/US_comscore_machine_demos_202001.txt.gz"
+
+
+resources:
+  pipelines:
+    comscore_mobile_ingest:
+      name: "${var.catalog} - Comscore Mobile Ingest"
+      serverless: true
+      target: "bronze"
+      libraries:
+          - file:
+              path: "comscore_mobile_pl.py"
+      configuration:
+        file_pattern: "*.csv.gz"
+        text_file_pattern: "*.txt.gz"
+        ingest_platform: "Comscore"
+        file_format: "csv"
+        sourcing_system: Comscore
+        sampling_method: "N/A"
+        platform_code: "CS"
+        android_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/2019/01/6941"
+        ios_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/IOS_URL_TRAFFIC/US/2019/01/6941/"
+        mobile_day_session_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_day_session/comscore_mobile_day_session_252m.txt.gz"
+        mobile_demographic_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_demographics/US_comscore_mobile_demos_201901.txt.gz"
+    comscore_desktop_ingest:
+      name: "${var.catalog} - Comscore Desktop Ingest"
+      serverless: true
+      target: "bronze"
+      libraries:
+        - file:
+            path: "comscore_desktop_pl.py"
+      configuration:
+        file_pattern: "*.csv.gz"
+        text_file_pattern: "*.txt.gz"
+        ingest_platform: "Comscore"
+        file_format: "csv"
+        sourcing_system: Comscore
+        sampling_method: "N/A"
+        platform_code: "CS"
+        desktop_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/DESKTOP_URL_TRAFFIC/US/2024/01/8775/"
+    comscore_desktop_day_session_ingest:
+      name: "${var.catalog} - Comscore Desktop Day Session Ingest"
+      serverless: true
+      target: "bronze"
+      libraries:
+        - file:
+            path: "comscore_desktop_day_session_pl.py"
+      configuration:
+        file_pattern: "*.csv.gz"
+        text_file_pattern: "*.txt.gz"
+        ingest_platform: "Comscore"
+        file_format: "csv"
+        sourcing_system: Comscore
+        sampling_method: "N/A"
+        platform_code: "CS"
+        desktop_day_session_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_day_session/"
+        schema_path: "dbfs:/Volumes/dev_catalog/default/comscore_raw/comscore_desktop_day_session_schema.json"
+    comscore_lookup_ingest:
+      catalog: ${var.catalog}
+      name: "${var.catalog} - Comscore Lookup Ingest"
+      serverless: true
+      target: "bronze"
+      libraries:
+        - file:
+            path: "comscore_lookup_pl.py"
+      configuration:
+        file_pattern: "*.csv.gz"
+        text_file_pattern: "*.txt.gz"
+        ingest_platform: "Comscore"
+        file_format: "csv"
+        sourcing_system: Comscore
+        sampling_method: "N/A"
+        platform_code: "CS"
+        desktop_search_click_data_path: ${var.desktop_search_click_data_path}
+        desktop_search_fact_data_path: ${var.desktop_search_fact_data_path}
+        desktop_web_entity_data_path: ${var.desktop_web_entity_data_path}
+        traffic_category_data_path: ${var.traffic_category_data_path}
+        desktop_os_lookup_data_path: ${var.desktop_os_lookup_data_path}
+        time_lookup_data_path: ${var.time_lookup_data_path}
+        browser_type_lookup_data_path: ${var.browser_type_lookup_data_path}
+        desktop_demographic_data_path: ${var.desktop_demographic_data_path}
+    bronze_unit_tests:
+      name: "${var.catalog} - Comscore Bronze Unit Tests"
+      target: "bronze"
+      libraries:
+          - file:
+              path: "tests/test_pipeline.py"
+      configuration:
+        test_table_name: "test_table"
+
+targets:
+  dev:
+    variables:
+      catalog: "dev_catalog"
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_mobile_ingest:
+          catalog: ${var.catalog}
+          configuration:
+            android_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/2020/01/"
+            ios_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/IOS_URL_TRAFFIC/US/2020/01/"
+            mobile_day_session_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_day_session/"
+            mobile_demographic_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_demographics/"
+          photon: true
+          development: false
+        comscore_desktop_ingest:
+          catalog: ${var.catalog}
+          configuration:
+            desktop_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/DESKTOP_URL_TRAFFIC/US/2024/02"
+          photon: true
+          development: true
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            table_name: ${var.table_name}
+          development: true
+        comscore_desktop_day_session_ingest:
+          catalog: ${var.catalog}
+
+  dev_kai:
+    variables:
+      catalog: "dev_kai"
+    mode: development
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_mobile_ingest:
+          catalog: ${var.catalog}
+          configuration:
+          development: true
+          photon: true
+        comscore_desktop_ingest:
+          catalog: ${var.catalog}
+          configuration:
+          development: true
+          photon: true
+        comscore_desktop_day_session_ingest:
+          catalog: ${var.catalog}
+        bronze_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            table_name: ${var.table_name}
+          development: true
+
+  dev_pavle:
+    variables:
+      catalog: "dev_pavle"
+    mode: development
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_mobile_ingest:
+          catalog: ${var.catalog}
+          development: true
+          photon: true
+        comscore_desktop_ingest:
+          catalog: ${var.catalog}
+          development: true
+          photon: true
+        comscore_desktop_day_session_ingest:
+          catalog: ${var.catalog}
+        bronze_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            table_name: ${var.table_name}
+          development: true
+  qa_comscore:
+    variables:
+      catalog: "qa_comscore"
+    mode: production
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+      root_path: /Workspace/Shared/.pipelines/bronze_comscore/
+    resources:
+      pipelines:
+        comscore_mobile_ingest:
+            catalog: ${var.catalog}
+            configuration:
+              android_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/"
+              ios_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/IOS_URL_TRAFFIC/US/"
+              mobile_day_session_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_day_session/"
+              mobile_demographic_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_demographics/"
+            photon: true
+            development: false
+        comscore_desktop_ingest:
+            serverless: false
+            catalog: ${var.catalog}
+            configuration:
+              desktop_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/DESKTOP_URL_TRAFFIC/US/"
+            photon: true
+            development: false
+            clusters:
+              - label: default
+                node_type_id: "Standard_E8_v3"
+                autoscale:
+                  min_workers: 4
+                  max_workers: 48
+                spark_conf:
+                  spark.driver.memory: "10g"
+                  spark.driver.memoryOverhead: "2g"
+                  spark.driver.extraJavaOptions: "-XX:+UseG1GC"
+                  spark.executor.extraJavaOptions: "-XX:+UseG1GC"
+                  spark.executor.memory: "52g"
+                  spark.executor.memoryOverhead: "8g"
+                  spark.executor.cores: "7"
+        comscore_desktop_day_session_ingest:
+          catalog: ${var.catalog}
+          configuration:
+            desktop_day_session_data_path: "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_day_session/"

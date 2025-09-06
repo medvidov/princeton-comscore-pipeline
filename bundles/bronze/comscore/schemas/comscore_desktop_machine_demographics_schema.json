@@ -1,0 +1,66 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "machine_id",
+      "nullable": true,
+      "type": "long"
+    },
+
+    {
+      "metadata": {},
+      "name": "country",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "region",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "time_zone_bias",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "computer_location",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "age",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "hh_income",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "children_present",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "hh_size",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "month_id",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "type": "struct"
+}

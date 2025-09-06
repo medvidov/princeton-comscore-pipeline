@@ -1,0 +1,64 @@
+{
+  "terraform": {
+    "required_providers": {
+      "databricks": {
+        "source": "databricks/databricks",
+        "version": "1.65.1"
+      }
+    }
+  },
+  "provider": {
+    "databricks": {}
+  },
+  "resource": {
+    "databricks_pipeline": {
+      "comscore_silver_clean_transform": {
+        "catalog": "dev_catalog",
+        "configuration": {
+          "catalog": "dev_catalog",
+          "platform_name": "Comscore",
+          "schema": "silver",
+          "schema_bronze": "bronze"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev/files/bundles/silver/comscore/comscore_silver_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_catalog - Comscore Silver Clean Transform",
+        "serverless": true,
+        "target": "silver"
+      },
+      "silver_unit_tests": {
+        "catalog": "dev_catalog",
+        "configuration": {
+          "catalog": "dev_catalog",
+          "schema": "silver",
+          "test_table_name": "test_table"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev/files/bundles/silver/comscore/tests/test_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_catalog - Comscore Silver Unit Tests",
+        "serverless": true,
+        "target": "silver"
+      }
+    }
+  }
+}

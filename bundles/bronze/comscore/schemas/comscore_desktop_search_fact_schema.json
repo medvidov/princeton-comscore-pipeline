@@ -1,0 +1,137 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "search_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "search_phrase",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "toolbar_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "auto_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "domain_name",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "ref_domain_name",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "ref_pattern_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "url_host",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_dir",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_page",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "event_time",
+      "nullable": true,
+      "type": "date"
+    },
+    {
+      "metadata": {},
+      "name": "ss2k",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "week_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "reply_code",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "machine_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "person_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "result_pages",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "affiliate_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "widget_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "google_instant_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "implicit_flag",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "secure_flag",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "type": "struct"
+}

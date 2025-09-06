@@ -1,0 +1,23 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "browser_type",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "browser_name",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "browser_name_detail",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "type": "struct"
+}

@@ -1,0 +1,65 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "machine_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "person_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "session_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "time_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "first_ss2k",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "pages",
+      "nullable": true,
+      "type": "decimal"
+    },
+    {
+      "metadata": {},
+      "name": "duration",
+      "nullable": true,
+      "type": "decimal"
+    },
+    {
+      "metadata": {},
+      "name": "pattern_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "ref_pattern_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "_c10",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "type": "struct"
+}

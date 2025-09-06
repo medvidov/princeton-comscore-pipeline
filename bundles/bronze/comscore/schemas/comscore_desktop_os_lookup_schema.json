@@ -1,0 +1,23 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "month_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "machine_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "os_version_name",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "type": "struct"
+}

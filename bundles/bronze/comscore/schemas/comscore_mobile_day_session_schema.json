@@ -1,0 +1,77 @@
+{
+    "fields": [
+        {
+            "metadata": {},
+            "name": "month_id",
+            "nullable": true,
+            "type": "integer"
+        },
+        {
+            "metadata": {},
+            "name": "session_id",
+            "nullable": true,
+            "type": "long"
+        },
+        {
+            "metadata": {},
+            "name": "device_id",
+            "nullable": true,
+            "type": "long"
+        },
+        {
+            "metadata": {},
+            "name": "platform",
+            "nullable": true,
+            "type": "string"
+        },
+        {
+            "metadata": {},
+            "name": "access_method_name",
+            "nullable": true,
+            "type": "string"
+        },
+        {
+            "metadata": {},
+            "name": "time_id",
+            "nullable": true,
+            "type": "integer"
+        },
+        {
+            "metadata": {},
+            "name": "calendar_day",
+            "nullable": true,
+            "type": "date"
+        },
+        {
+            "metadata": {},
+            "name": "event_time",
+            "nullable": true,
+            "type": "timestamp"
+        },
+        {
+            "metadata": {},
+            "name": "ss2k",
+            "nullable": true,
+            "type": "integer"
+        },
+        {
+            "metadata": {},
+            "name": "pages",
+            "nullable": true,
+            "type": "decimal"
+        },
+        {
+            "metadata": {},
+            "name": "duration",
+            "nullable": true,
+            "type": "decimal"
+        },
+        {
+            "metadata": {},
+            "name": "pattern_id",
+            "nullable": true,
+            "type": "integer"
+        }
+    ],
+    "type": "struct"
+}

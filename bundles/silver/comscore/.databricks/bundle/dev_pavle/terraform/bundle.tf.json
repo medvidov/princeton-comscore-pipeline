@@ -1,0 +1,90 @@
+{
+  "terraform": {
+    "required_providers": {
+      "databricks": {
+        "source": "databricks/databricks",
+        "version": "1.65.1"
+      }
+    }
+  },
+  "provider": {
+    "databricks": {}
+  },
+  "resource": {
+    "databricks_pipeline": {
+      "comscore_silver_clean_transform": {
+        "catalog": "dev_pavle",
+        "configuration": {
+          "platform_name": "Comscore",
+          "schema_bronze": "bronze"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/files/bundles/silver/comscore/comscore_silver_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_pavle - Comscore Silver Clean Transform",
+        "serverless": true,
+        "target": "silver"
+      },
+      "comscore_silver_desktop_traffic": {
+        "catalog": "dev_pavle",
+        "configuration": {
+          "catalog": "dev_pavle",
+          "desktop_combined_demographic_table": "comscore_bz_desktop_combined_demographic",
+          "desktop_os_lookup_table": "comscore_bz_desktop_os_lookup",
+          "desktop_traffic_table": "comscore_desktop_traffic",
+          "platform_name": "Comscore",
+          "schema": "silver",
+          "schema_bronze": "bronze",
+          "time_lookup_table": "comscore_bz_time_lookup"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/files/bundles/silver/comscore/comscore_silver_desktop_traffic_pl.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_pavle - Comscore Silver Desktop Traffic",
+        "serverless": true,
+        "target": "silver"
+      },
+      "silver_unit_tests": {
+        "catalog": "dev_pavle",
+        "configuration": {
+          "catalog": "dev_pavle",
+          "schema": "silver",
+          "test_table_name": "test_table"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev_pavle/files/bundles/silver/comscore/tests/test_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_pavle - Comscore Silver Unit Tests",
+        "serverless": true,
+        "target": "silver"
+      }
+    }
+  }
+}

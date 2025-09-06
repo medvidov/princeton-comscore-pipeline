@@ -1,0 +1,260 @@
+bundle:
+  name: silver_comscore
+
+sync:
+  paths:
+    - "./"
+    - "../../../src/"
+
+variables:
+  # Variables without a default value must be set in the target configuration (e.g. dev, qa)
+  schema:
+    default: "silver"
+  schema_bronze:
+    default: "bronze"
+  catalog:
+    default: "qa_comscore"
+  # Bronze table names
+  ios_traffic_table:
+    default: "comscore_bz_ios_traffic"
+  android_traffic_table:
+    default: "comscore_bz_android_traffic"
+  desktop_traffic_table:
+    default: "comscore_desktop_traffic"
+  desktop_day_session_table:
+    default: "comscore_bz_desktop_day_session"
+  mobile_day_session_table:
+    default: "comscore_bz_mobile_day_session"
+  desktop_search_click_table:
+    default: "comscore_bz_desktop_search_click"
+  desktop_search_fact_table:
+    default: "comscore_bz_desktop_search_fact"
+  desktop_web_entity_table:
+    default: "comscore_bz_desktop_web_entity"
+  traffic_category_table:
+    default: "comscore_bz_traffic_category_lookup"
+  desktop_os_lookup_table:
+    default: "comscore_bz_desktop_os_lookup"
+  time_lookup_table:
+    default: "comscore_bz_time_lookup"
+  browser_lookup_table:
+    default: "comscore_bz_browser_lookup"
+  desktop_combined_demographic_table:
+    default: "comscore_bz_desktop_combined_demographic"
+  mobile_demographic_table:
+    default: "comscore_bz_mobile_demographic"
+
+
+resources:
+  pipelines:
+    comscore_silver_clean_transform:
+      name: "${var.catalog} - Comscore Silver Clean Transform"
+      serverless: true
+      target: "silver"
+      libraries:
+          - file:
+              path: "comscore_silver_pipeline.py"
+      configuration:
+        platform_name: "Comscore"
+        schema_bronze: ${var.schema_bronze}
+    comscore_silver_desktop_traffic:
+      name: "${var.catalog} - Comscore Silver Desktop Traffic"
+      serverless: true
+      target: "silver"
+      libraries:
+          - file:
+              path: "comscore_silver_desktop_traffic_pl.py"
+      configuration:
+        platform_name: "Comscore"
+        schema_bronze: ${var.schema_bronze}
+    comscore_silver_desktop_day_session:
+      name: "${var.catalog} - Comscore Silver Desktop Day Session"
+      serverless: true
+      target: "silver"
+      libraries:
+          - file:
+              path: "comscore_silver_desktop_day_session_pl.py"
+      configuration:
+        platform_name: "Comscore"
+        schema_bronze: ${var.schema_bronze}
+    silver_unit_tests:
+      name: "${var.catalog} - Comscore Silver Unit Tests"
+      serverless: true
+      target: "silver"
+      libraries:
+          - file:
+              path: "tests/test_pipeline.py"
+      configuration:
+        test_table_name: "test_table"
+
+targets:
+  dev:
+    variables:
+      catalog: "dev_catalog"
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+        silver_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+  dev_kai:
+    variables:
+      catalog: "dev_kai"
+    mode: development
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+        silver_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+  dev_pavle:
+    variables:
+      catalog: "dev_pavle"
+    mode: development
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          development: true
+        comscore_silver_desktop_traffic:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            schema_bronze: ${var.schema_bronze}
+            desktop_traffic_table: ${var.desktop_traffic_table}
+            desktop_combined_demographic_table: ${var.desktop_combined_demographic_table}
+            desktop_os_lookup_table: ${var.desktop_os_lookup_table}
+            time_lookup_table: ${var.time_lookup_table}
+        comscore_silver_desktop_day_session:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            schema_bronze: ${var.schema_bronze}
+            desktop_traffic_table: ${var.desktop_traffic_table}
+            desktop_combined_demographic_table: ${var.desktop_combined_demographic_table}
+            time_lookup_table: ${var.time_lookup_table}
+          development: true
+        silver_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+  dev_lilly:
+    variables:
+      catalog: "dev_lilly"
+    mode: development
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+        silver_unit_tests:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+  qa_comscore:
+    variables:
+      catalog: "qa_comscore"
+    mode: production
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+      root_path: /Workspace/Shared/.pipelines/silver_comscore/
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            bronze_schema: ${var.schema_bronze}
+            ios_traffic_table: "comscore_ios_traffic"
+            android_traffic_table: "comscore_android_traffic"
+            desktop_traffic_table: "comscore_desktop_traffic"
+            desktop_day_session_table: ${var.desktop_day_session_table}
+            mobile_day_session_table: "comscore_mobile_day_session"
+            desktop_search_click_table: ${var.desktop_search_click_table}
+            desktop_search_fact_table: ${var.desktop_search_fact_table}
+            desktop_web_entity_table: ${var.desktop_web_entity_table}
+            traffic_category_table: ${var.traffic_category_table}
+            desktop_os_lookup_table: ${var.desktop_os_lookup_table}
+            time_lookup_table: ${var.time_lookup_table}
+            browser_lookup_table: ${var.browser_lookup_table}
+            desktop_combined_demographic_table: ${var.desktop_combined_demographic_table}
+            mobile_demographic_table: "comscore_mobile_demographic"
+        comscore_silver_desktop_traffic:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            schema_bronze: ${var.schema_bronze}
+            desktop_traffic_table: ${var.desktop_traffic_table}
+            desktop_combined_demographic_table: ${var.desktop_combined_demographic_table}
+            desktop_os_lookup_table: ${var.desktop_os_lookup_table}
+            time_lookup_table: ${var.time_lookup_table}
+        comscore_silver_desktop_day_session:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+            schema_bronze: ${var.schema_bronze}
+            desktop_traffic_table: ${var.desktop_traffic_table}
+            desktop_combined_demographic_table: ${var.desktop_combined_demographic_table}
+            time_lookup_table: ${var.time_lookup_table}
+          photon: true
+          development: false
+        silver_unit_tests:
+            catalog: ${var.catalog}
+            configuration:
+                catalog: ${var.catalog}
+                schema: ${var.schema}
+  qa:
+    variables:
+      catalog: "qa_catalog"
+    mode: production
+    workspace:
+      host: https://adb-1335559103600339.19.azuredatabricks.net
+      root_path: /Workspace/Shared/.pipelines/silver_comscore
+    resources:
+      pipelines:
+        comscore_silver_clean_transform:
+          catalog: ${var.catalog}
+          configuration:
+            catalog: ${var.catalog}
+            schema: ${var.schema}
+          development: false
+        silver_unit_tests:
+            catalog: ${var.catalog}
+            configuration:
+                catalog: ${var.catalog}
+                schema: ${var.schema}
+            development: false
+    permissions:
+      - level: CAN_MANAGE
+        service_principal_name: 3e6b512a-8275-4a97-be46-ca885406724b

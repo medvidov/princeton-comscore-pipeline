@@ -1,0 +1,177 @@
+{
+  "terraform": {
+    "required_providers": {
+      "databricks": {
+        "source": "databricks/databricks",
+        "version": "1.65.1"
+      }
+    }
+  },
+  "provider": {
+    "databricks": {}
+  },
+  "resource": {
+    "databricks_pipeline": {
+      "bronze_unit_tests": {
+        "configuration": {
+          "test_table_name": "test_table"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/bronze_comscore/state/metadata.json"
+        },
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/bronze_comscore/files/bundles/bronze/comscore/tests/test_pipeline.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Bronze Unit Tests",
+        "target": "bronze"
+      },
+      "comscore_desktop_day_session_ingest": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "desktop_day_session_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_day_session/",
+          "file_format": "csv",
+          "file_pattern": "*.csv.gz",
+          "ingest_platform": "Comscore",
+          "platform_code": "CS",
+          "sampling_method": "N/A",
+          "schema_path": "dbfs:/Volumes/dev_catalog/default/comscore_raw/comscore_desktop_day_session_schema.json",
+          "sourcing_system": "Comscore",
+          "text_file_pattern": "*.txt.gz"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/bronze_comscore/state/metadata.json"
+        },
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/bronze_comscore/files/bundles/bronze/comscore/comscore_desktop_day_session_pl.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Desktop Day Session Ingest",
+        "serverless": true,
+        "target": "bronze"
+      },
+      "comscore_desktop_ingest": {
+        "catalog": "qa_comscore",
+        "cluster": [
+          {
+            "autoscale": {
+              "max_workers": 48,
+              "min_workers": 4
+            },
+            "label": "default",
+            "node_type_id": "Standard_E8_v3",
+            "spark_conf": {
+              "spark.driver.extraJavaOptions": "-XX:+UseG1GC",
+              "spark.driver.memory": "10g",
+              "spark.driver.memoryOverhead": "2g",
+              "spark.executor.cores": "7",
+              "spark.executor.extraJavaOptions": "-XX:+UseG1GC",
+              "spark.executor.memory": "52g",
+              "spark.executor.memoryOverhead": "8g"
+            }
+          }
+        ],
+        "configuration": {
+          "desktop_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/DESKTOP_URL_TRAFFIC/US/",
+          "file_format": "csv",
+          "file_pattern": "*.csv.gz",
+          "ingest_platform": "Comscore",
+          "platform_code": "CS",
+          "sampling_method": "N/A",
+          "sourcing_system": "Comscore",
+          "text_file_pattern": "*.txt.gz"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/bronze_comscore/state/metadata.json"
+        },
+        "development": false,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/bronze_comscore/files/bundles/bronze/comscore/comscore_desktop_pl.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Desktop Ingest",
+        "photon": true,
+        "serverless": false,
+        "target": "bronze"
+      },
+      "comscore_lookup_ingest": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "browser_type_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/browser_type/",
+          "desktop_demographic_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_demographics/US_comscore_machine_demos_202001.txt.gz",
+          "desktop_os_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/desktop_OS_lookup/",
+          "desktop_search_click_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_click/US_comscore_click_rate_20200727.txt.gz",
+          "desktop_search_fact_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_fact/US_comscore_search_fact_20191230.txt.gz",
+          "desktop_web_entity_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_web_entity_map/US_comscore_search_web_entity_map_20191230.txt.gz",
+          "file_format": "csv",
+          "file_pattern": "*.csv.gz",
+          "ingest_platform": "Comscore",
+          "platform_code": "CS",
+          "sampling_method": "N/A",
+          "sourcing_system": "Comscore",
+          "text_file_pattern": "*.txt.gz",
+          "time_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/time_lookup/",
+          "traffic_category_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/traffic_category_map/comscore_category_map_201901.txt.gz"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/bronze_comscore/state/metadata.json"
+        },
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/bronze_comscore/files/bundles/bronze/comscore/comscore_lookup_pl.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Lookup Ingest",
+        "serverless": true,
+        "target": "bronze"
+      },
+      "comscore_mobile_ingest": {
+        "catalog": "qa_comscore",
+        "configuration": {
+          "android_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/",
+          "file_format": "csv",
+          "file_pattern": "*.csv.gz",
+          "ingest_platform": "Comscore",
+          "ios_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/IOS_URL_TRAFFIC/US/",
+          "mobile_day_session_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_day_session/",
+          "mobile_demographic_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_demographics/",
+          "platform_code": "CS",
+          "sampling_method": "N/A",
+          "sourcing_system": "Comscore",
+          "text_file_pattern": "*.txt.gz"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Shared/.pipelines/bronze_comscore/state/metadata.json"
+        },
+        "development": false,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Shared/.pipelines/bronze_comscore/files/bundles/bronze/comscore/comscore_mobile_pl.py"
+            }
+          }
+        ],
+        "name": "qa_comscore - Comscore Mobile Ingest",
+        "photon": true,
+        "serverless": true,
+        "target": "bronze"
+      }
+    }
+  }
+}

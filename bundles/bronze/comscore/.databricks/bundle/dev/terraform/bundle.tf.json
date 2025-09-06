@@ -1,0 +1,87 @@
+{
+  "terraform": {
+    "required_providers": {
+      "databricks": {
+        "source": "databricks/databricks",
+        "version": "1.65.1"
+      }
+    }
+  },
+  "provider": {
+    "databricks": {}
+  },
+  "resource": {
+    "databricks_pipeline": {
+      "bronze_unit_tests": {
+        "catalog": "dev_catalog",
+        "configuration": {
+          "catalog": "dev_catalog",
+          "raw_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/2019/01/6941",
+          "schema": "bronze",
+          "table_name": "comscore_bz_mobile_traffic",
+          "test_table_name": "test_table"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/bronze_comscore/dev/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/bronze_comscore/dev/files/bundles/bronze/comscore/tests/test_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_catalog - Comscore Bronze Unit Tests",
+        "target": "bronze"
+      },
+      "comscore_bronze_ingest": {
+        "catalog": "dev_catalog",
+        "configuration": {
+          "android_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/2019/01/6941",
+          "browser_type_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/browser_type/",
+          "catalog": "dev_catalog",
+          "desktop_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/DESKTOP_URL_TRAFFIC/US/2020/01/7306/",
+          "desktop_day_session_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_day_session/comscore_desktop_day_session_244m.txt.gz_0_0_0.csv.gz",
+          "desktop_demographic_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_demographics/",
+          "desktop_os_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/desktop_OS_lookup/",
+          "desktop_search_click_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_click/US_comscore_click_rate_20200727.txt.gz",
+          "desktop_search_fact_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_fact/US_comscore_search_fact_20191230.txt.gz",
+          "desktop_web_entity_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/desktop_search_web_entity_map/US_comscore_search_web_entity_map_20191230.txt.gz",
+          "file_format": "csv",
+          "file_pattern": "*.csv.gz",
+          "ios_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/IOS_URL_TRAFFIC/US/2019/01/6941/",
+          "mobile_day_session_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_day_session/comscore_mobile_day_session_252m.txt.gz",
+          "mobile_demographic_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/US/mobile_demographics/",
+          "platform": "Comscore",
+          "platform_code": "CS",
+          "raw_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/ANDROID_URL_TRAFFIC/US/2019/01/6941",
+          "sampling_method": "N/A",
+          "schema": "bronze",
+          "schema_path": "dbfs:/Volumes/dev_catalog/default/comscore_raw/comscore_mobile_traffic_schema.json",
+          "sourcing_system": "Comscore",
+          "table_name": "comscore_bz_mobile_traffic",
+          "time_lookup_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/time_lookup/",
+          "traffic_category_data_path": "dbfs:/Volumes/raw_ingest_catalog/default/comscore/Lookups/traffic_category_map/"
+        },
+        "deployment": {
+          "kind": "BUNDLE",
+          "metadata_file_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/bronze_comscore/dev/state/metadata.json"
+        },
+        "development": true,
+        "library": [
+          {
+            "file": {
+              "path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/bronze_comscore/dev/files/bundles/bronze/comscore/comscore_bronze_pipeline.py"
+            }
+          }
+        ],
+        "name": "[dev pavle] dev_catalog - Comscore Bronze Ingest",
+        "photon": true,
+        "serverless": true,
+        "target": "bronze"
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "machine_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "url_idc",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "person_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "ss2k",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "time_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "domain_name",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_host",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_dir",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_page",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_refer_domain",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_refer_host",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_refer_dir",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "url_refer_page",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "mimetype",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "http_rc",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "keywords",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "html_title",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "pattern_id",
+      "nullable": true,
+      "type": "integer"
+    }
+  ],
+  "type": "struct"
+}

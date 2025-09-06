@@ -1,0 +1,23 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "search_id",
+      "nullable": true,
+      "type": "long"
+    },
+    {
+      "metadata": {},
+      "name": "web_name",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "metadata": {},
+      "name": "week_id",
+      "nullable": true,
+      "type": "integer"
+    }
+  ],
+  "type": "struct"
+}

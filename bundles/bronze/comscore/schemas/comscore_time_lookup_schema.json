@@ -1,0 +1,31 @@
+{
+  "fields": [
+    {
+      "metadata": {},
+      "name": "time_id",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "week_num",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {},
+      "name": "month_num",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "metadata": {
+        "__detected_date_formats": "yyyy-M-d"
+      },
+      "name": "calendar_day",
+      "nullable": true,
+      "type": "date"
+    }
+  ],
+  "type": "struct"
+}

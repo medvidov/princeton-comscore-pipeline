@@ -1,0 +1,32 @@
+{
+  "version": "v1",
+  "host": "https://adb-1335559103600339.19.azuredatabricks.net",
+  "remote_path": "/Workspace/Users/pavle@researchaccelerator.org/.bundle/silver_comscore/dev/files",
+  "last_modified_times": {
+    "bundles/silver/comscore/bundle.yml": "2025-05-12T16:38:27.082646084-07:00",
+    "bundles/silver/comscore/comscore_silver_pipeline.py": "2025-05-12T16:30:41.578547747-07:00",
+    "bundles/silver/comscore/tests/test_pipeline.py": "2025-04-17T08:51:53.581616997-07:00",
+    "src/__init__.py": "2025-02-12T10:49:32.422219736-08:00",
+    "src/ingestion.py": "2025-02-12T10:49:32.422401608-08:00",
+    "src/log_utils.py": "2025-03-19T10:49:39.686870838-07:00",
+    "src/utils.py": "2025-03-19T10:49:39.687727752-07:00"
+  },
+  "local_to_remote_names": {
+    "bundles/silver/comscore/bundle.yml": "bundles/silver/comscore/bundle.yml",
+    "bundles/silver/comscore/comscore_silver_pipeline.py": "bundles/silver/comscore/comscore_silver_pipeline.py",
+    "bundles/silver/comscore/tests/test_pipeline.py": "bundles/silver/comscore/tests/test_pipeline.py",
+    "src/__init__.py": "src/__init__.py",
+    "src/ingestion.py": "src/ingestion.py",
+    "src/log_utils.py": "src/log_utils.py",
+    "src/utils.py": "src/utils.py"
+  },
+  "remote_to_local_names": {
+    "bundles/silver/comscore/bundle.yml": "bundles/silver/comscore/bundle.yml",
+    "bundles/silver/comscore/comscore_silver_pipeline.py": "bundles/silver/comscore/comscore_silver_pipeline.py",
+    "bundles/silver/comscore/tests/test_pipeline.py": "bundles/silver/comscore/tests/test_pipeline.py",
+    "src/__init__.py": "src/__init__.py",
+    "src/ingestion.py": "src/ingestion.py",
+    "src/log_utils.py": "src/log_utils.py",
+    "src/utils.py": "src/utils.py"
+  }
+}
